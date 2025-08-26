@@ -5,6 +5,7 @@ from openai import OpenAI
 from dotenv import load_dotenv
 load_dotenv()
 
+os.environ["GRPC_VERBOSITY"] = "NONE"
 api_key = os.getenv("GOOGLE_API_KEY")
 if not api_key:
     raise ValueError("GOOGLE_API_KEY environment variable not set")
