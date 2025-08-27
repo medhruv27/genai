@@ -1,2 +1,3 @@
 docker compose up
 uvicorn ollama_api:app --port 8000
+http://localhost:6333/dashboard#/collections

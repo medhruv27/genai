@@ -49,6 +49,11 @@ SYSTEM_PROMPT = f"""
     Context:
     {context}
 """
+# SYSTEM_PROMPT = f"""
+#     You are a helpful AI assistant who answers user query based on the available context retrieved from a PDF file. and Tell user about the things mentioned in pdf only.
+#     Context:
+#     {context}
+# """
 
 # print("SYSTEM_PROMPT: ", SYSTEM_PROMPT)
 

@@ -11,7 +11,7 @@ api_key = os.getenv("GOOGLE_API_KEY")
 if not api_key:
     raise ValueError("GOOGLE_API_KEY environment variable not set")
 
-pdf_path = Path(__file__).parent / "nodejs.pdf"
+pdf_path = Path(__file__).parent / "Resume_Aug25.pdf"
 if not pdf_path.exists():
     raise FileNotFoundError(f"PDF file not found at: {pdf_path}")
 
