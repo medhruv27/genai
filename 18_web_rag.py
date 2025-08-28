@@ -8,7 +8,8 @@ from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
-from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+# from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+from langchain_google_genai import GoogleGenerativeAIEmbeddings , GoogleGenerativeAI
 from qdrant_client import QdrantClient
 from qdrant_client.http import models
 from bs4 import BeautifulSoup
@@ -21,15 +22,19 @@ load_dotenv()
 
 # Configuration
 api_key = os.getenv("GOOGLE_API_KEY")
+qdrant_api_key = os.getenv("QDRANT_API_KEY")
+qdrant_url = os.getenv("QDRANT_URL")
 # OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-QDRANT_URL = "http://localhost:6333"  # or your Qdrant cloud URL
-QDRANT_API_KEY = None  # or your Qdrant API key
+QDRANT_URL = qdrant_url 
+QDRANT_API_KEY = qdrant_api_key
 COLLECTION_PREFIX = "chaidocs_"
 DOCS_BASE_URL = "https://chaidocs.vercel.app"
 
 # Initialize clients
-embeddings = OpenAIEmbeddings(openai_api_key=api_key)
-llm = ChatOpenAI(model="gpt-4", openai_api_key=api_key)
+# embeddings = OpenAIEmbeddings(openai_api_key=api_key)
+# llm = ChatOpenAI(model="gpt-4", openai_api_key=api_key)
+embeddings = GoogleGenerativeAIEmbeddings(model="gemini-embedding-001")
+llm = GoogleGenerativeAI(model="gemini-1.5-flash")
 qdrant_client = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY)
 
 class ChaidocsRAG:
