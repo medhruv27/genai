@@ -1,4 +1,5 @@
 # pip install qdrant-client langchain openai tiktoken beautifulsoup4 requests
+# https://github.com/dewanganlakhan/chaidocs_rag/tree/main
 import os
 from typing import List, Dict, Optional, Tuple
 from langchain_community.vectorstores import Qdrant
