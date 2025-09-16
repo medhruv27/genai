@@ -1,8 +1,8 @@
 from typing_extensions import TypedDict
 from typing import Annotated
 from langgraph.graph.message import add_messages
-from langchain.schema import SystemMessage
-from langchain.chat_models import init_chat_model
+from langchain.schema import SystemMessage, HumanMessage
+from langchain_google_genai import ChatGoogleGenerativeAI
 import os
 from langchain_core.tools import tool
 from langgraph.prebuilt import ToolNode, tools_condition
@@ -21,7 +21,7 @@ def run_command(cmd: str):
 
 available_tools = [run_command]
 
-llm = init_chat_model(model_provider="openai", model="gpt-4.1")
+llm = ChatGoogleGenerativeAI(google_api_key=os.environ.get("GOOGLE_API_KEY"))
 llm_with_tool = llm.bind_tools(tools=available_tools)
 
 class State(TypedDict):
@@ -44,7 +44,18 @@ def chatbot(state: State):
             Always make sure to keep your generated codes and files in chat_gpt/ folder. you can create one if not already there.
     """)
 
-    message = llm_with_tool.invoke([system_prompt] + state["messages"])
+    # Convert existing messages to HumanMessage for user content
+    formatted_messages = []
+    for msg in state["messages"]:
+        if isinstance(msg, HumanMessage):
+            formatted_messages.append(msg)
+        else:
+            # Assuming other messages are from the AI or system, convert them appropriately
+            # For simplicity, if it's not a HumanMessage, it's treated as a SystemMessage here.
+            # You might need more sophisticated role handling depending on your `messages` structure.
+            formatted_messages.append(SystemMessage(content=msg.content))
+
+    message = llm_with_tool.invoke([system_prompt] + formatted_messages)
     return { "messages": message }
 
 tool_node = ToolNode(tools=available_tools)

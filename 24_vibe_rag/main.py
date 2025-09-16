@@ -1,7 +1,17 @@
 from dotenv import load_dotenv
-from openai import AsyncOpenAI
-from openai.helpers import LocalAudioPlayer
 import asyncio
+import google.generativeai as genai
+import os
+
+genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
+
+# Assuming you want to use the GenerativeModel asynchronously
+gemini_model = genai.GenerativeModel("gemini-1.5-flash")
+
+async def call_gemini_async(prompt):
+    response = await gemini_model.generate_content_async(prompt)
+    return response.text
+
 load_dotenv()
 
 import speech_recognition as sr
@@ -9,17 +19,12 @@ from .graph import graph
 
 messages = []
 
-openai = AsyncOpenAI()
 
 async def tts(text: str):
-    async with openai.audio.speech.with_streaming_response.create(
-        model="tts-1",
-        voice="coral",
-        input=text,
-        instructions="Speak in a funny tone",
-        response_format="pcm"
-    ) as response:
-        await LocalAudioPlayer().play(response)
+    response = await gemini_model.generate_content_async(text)
+    # Since Gemini does not have a direct streaming TTS, we will just print the text for now.
+    # If you have another TTS solution, you can integrate it here.
+    print(response.text)
 
 def main():
     r = sr.Recognizer()  # Speech to Text
