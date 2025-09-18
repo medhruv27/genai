@@ -2,3 +2,6 @@ docker compose up
 uvicorn ollama_api:app --port 8000
 http://localhost:6333/dashboard#/collections
 docker compose -f docker-compose.db.yml up -d
+rq worker -c 9_advancerag.queue.connection
+docker-compose down
+docker compose up 

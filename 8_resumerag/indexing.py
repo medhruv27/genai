@@ -46,7 +46,7 @@ embedding_model = GoogleGenerativeAIEmbeddings(
 vector_store = QdrantVectorStore.from_documents(
     documents=split_docs,
     url="http://localhost:6333",
-    collection_name="resume_vectors",
+    collection_name="8_resumerag",
     embedding=embedding_model,
     force_recreate=True
 )

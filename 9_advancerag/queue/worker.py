@@ -17,8 +17,8 @@ embedding_model = GoogleGenerativeAIEmbeddings(
 )
 
 vector_db = QdrantVectorStore.from_existing_collection(
-    url="http://vector-db:6333",
-    collection_name="learning_vectors",
+    url="http://localhost:6333",
+    collection_name="resume_vectors",
     embedding=embedding_model,
 )
 
