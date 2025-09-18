@@ -3,16 +3,16 @@ import os
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_qdrant import QdrantVectorStore
 from openai import OpenAI
-
-api_key = os.getenv("GEMINI_API_KEY")
-
+from dotenv import load_dotenv
+load_dotenv()
+api_key = os.getenv("GOOGLE_API_KEY")
 client = OpenAI(
     api_key=api_key,
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
 )
 
 embedding_model = GoogleGenerativeAIEmbeddings(
-    model="models/embedding-001",
+    model="text-embedding-004",
     google_api_key=api_key
 )
 

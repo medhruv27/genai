@@ -6,10 +6,12 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 
 from langchain_qdrant import QdrantVectorStore
+from dotenv import load_dotenv
+load_dotenv()
+api_key = os.getenv("GOOGLE_API_KEY")
 
-api_key = os.getenv("GEMINI_API_KEY")
+pdf_path = Path(__file__).parent / "resume.pdf"
 
-pdf_path = Path(__file__).parent / "nodejs.pdf"
 
 # Loading
 loader = PyPDFLoader(file_path=pdf_path)
@@ -23,18 +25,30 @@ text_splitter = RecursiveCharacterTextSplitter(
 
 split_docs = text_splitter.split_documents(documents=docs)
 
+"""
+from langchain_openai import OpenAIEmbeddings
+
+OpenAI Embeddings
+==================
+embedding_model = OpenAIEmbeddings(
+    model="text-embedding-3-large",
+    api_key=api_key
+)
+"""
+
 # Vector Embeddings
 embedding_model = GoogleGenerativeAIEmbeddings(
-    model="models/embedding-001",
+    model="text-embedding-004",
     google_api_key=api_key
 )
 
 # Using [embedding_model] create embeddings of [split_docs] and store in DB
 vector_store = QdrantVectorStore.from_documents(
     documents=split_docs,
-    url="http://vector-db:6333",
-    collection_name="learning_vectors",
+    url="http://localhost:6333",
+    collection_name="resume_vectors",
     embedding=embedding_model,
+    force_recreate=True
 )
 
 print("Indexing of Documents Done...")
