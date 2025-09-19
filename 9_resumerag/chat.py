@@ -15,7 +15,7 @@ client = OpenAI(
 
 # Vector Embeddings
 embedding_model = GoogleGenerativeAIEmbeddings(
-    model="models/embedding-001",
+    model="models/embedding-004",
     google_api_key=api_key
 )
 

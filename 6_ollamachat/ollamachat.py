@@ -12,3 +12,5 @@ def chat(message:str=Body(...,description="Chat Message")):
         {"role":"user","content":message}
     ])
     return response['message']['content']
+
+# uvicorn 12_ollama_chat:app --reload --port 8000
