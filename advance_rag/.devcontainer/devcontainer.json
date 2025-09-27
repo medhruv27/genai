@@ -1,5 +1,5 @@
 {
-    "name": "Anshul's GenAI Cohort Learning",
+    "name": "Genai Project",
     "dockerComposeFile": "docker-compose.yaml",
     "service": "app",
   
