@@ -5,3 +5,4 @@ docker compose -f docker-compose.db.yml up -d
 rq worker -c 9_advancerag.queue.connection
 docker-compose down
 docker compose up 
+curl localhost:8000

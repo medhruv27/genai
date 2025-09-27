@@ -7,8 +7,9 @@ from langgraph.graph import StateGraph, START, END
 from pydantic import BaseModel
 
 from openai import OpenAI
-
-api_key = os.getenv("GEMINI_API_KEY")
+from dotenv import load_dotenv
+load_dotenv()
+api_key = os.getenv("GOOGLE_API_KEY")
 
 client = OpenAI(
     api_key=api_key,
