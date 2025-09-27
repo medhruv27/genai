@@ -32,7 +32,6 @@ def chat_node(state: State):
 
 
 graph_builder = StateGraph(State)
-
 graph_builder.add_node("chat_node", chat_node)
 graph_builder.add_edge(START, "chat_node")
 graph_builder.add_edge("chat_node", END)
